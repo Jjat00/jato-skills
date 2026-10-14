@@ -1,0 +1,31 @@
+---
+// Una lámina de ejemplo (video en bucle o imagen) con su etiqueta. `grow` reparte el ancho de la fila.
+interface Props {
+  m: { src: string; ratio: string; label: string; image?: boolean };
+  title: string;
+  grow?: boolean;
+}
+const { m, title, grow = true } = Astro.props;
+const [w, h] = m.ratio.split("/").map(Number);
+const style = `aspect-ratio: ${m.ratio};` + (grow ? ` flex: ${w / h} 1 0;` : "");
+---
+
+<figure class="relative min-w-0" style={style}>
+  {
+    m.image ? (
+      <img src={`/media/${m.src}.jpg`} alt={`${title}: ${m.label}`} loading="lazy" class="size-full border border-line object-cover" />
+    ) : (
+      <video
+        class="lazy-video size-full border border-line object-cover"
+        data-src={`/media/${m.src}.mp4`}
+        poster={`/media/${m.src}.jpg`}
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-label={`${title}: ${m.label}`}
+      />
+    )
+  }
+  <figcaption class="absolute bottom-0 left-0 bg-ink/80 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted">{m.label}</figcaption>
+</figure>

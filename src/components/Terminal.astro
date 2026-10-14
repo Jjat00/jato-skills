@@ -1,0 +1,17 @@
+---
+interface Props {
+  lines: string[];
+}
+const { lines } = Astro.props;
+---
+
+<div class="w-full max-w-lg border border-line bg-panel font-mono text-xs sm:text-[13px]">
+  <div class="flex gap-1.5 border-b border-line px-3 py-2.5">
+    <span class="size-2 bg-line"></span>
+    <span class="size-2 bg-line"></span>
+    <span class="size-2 bg-line"></span>
+  </div>
+  <div class="space-y-1.5 px-4 py-4">
+    {lines.map((l) => <p class={l.startsWith("→") ? "text-cyan" : l.startsWith("$") ? "text-fg" : "text-dim"}>{l}</p>)}
+  </div>
+</div>

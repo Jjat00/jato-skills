@@ -1,0 +1,146 @@
+---
+// Página propia de cada skill: para compartir una sola, con más detalle y todos sus ejemplos.
+import Base from "../layouts/Base.astro";
+import Install from "../components/Install.astro";
+import Tile from "../components/Tile.astro";
+import Terminal from "../components/Terminal.astro";
+import { CATEGORIES, REPO, skills, installOne, sourceUrl } from "../data/skills.js";
+
+export function getStaticPaths() {
+  return skills.map((s) => ({ params: { name: s.name }, props: { s } }));
+}
+
+const { s } = Astro.props;
+const category = CATEGORIES.find((c) => c.id === s.category)?.label;
+const media = s.media ?? [];
+const poster = media.find((m) => !m.image) ?? media[0];
+const others = skills.filter((o) => o.name !== s.name);
+---
+
+<Base title={`${s.title} · jato skills`} description={s.line} path={`/${s.name}/`} image={poster && `/media/${poster.src}.jpg`}>
+  <header class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6 sm:px-8">
+    <a href="/" class="group flex items-baseline gap-0.5" aria-label="Todas las skills">
+      <span class="text-2xl font-semibold tracking-tight">jato</span>
+      <span class="font-mono text-sm text-dim transition-colors group-hover:text-muted">/skills</span>
+    </a>
+    <nav class="flex items-center gap-5 font-mono text-xs uppercase tracking-widest text-muted">
+      <a href="/" class="hover:text-fg">← Todas</a>
+      <a href={REPO} target="_blank" rel="noopener" class="hover:text-fg">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pb-24 sm:px-8">
+    <section class="grid gap-10 border-b border-line pb-12 pt-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
+      <div class="flex flex-col">
+        <p class="font-mono text-xs uppercase tracking-widest text-dim">{category} · <span class="normal-case tracking-normal">{s.name}</span></p>
+        <h1 class="rise mt-3 text-4xl font-semibold leading-[1.02] tracking-tighter sm:text-6xl">{s.title}</h1>
+        <p class="rise mt-5 text-lg leading-relaxed text-muted" style="animation-delay: 80ms">{s.about ?? s.line}</p>
+
+        <p class="mt-8 font-mono text-[11px] uppercase tracking-widest text-dim">Pídele</p>
+        <p class="mt-2 border-l-2 border-cyan pl-3 text-lg text-fg">«{s.ask}»</p>
+
+        <div class="mt-8">
+          <p class="mb-2 font-mono text-[11px] uppercase tracking-widest text-dim">Instalar</p>
+          <Install cmd={installOne(s)} />
+        </div>
+
+        <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs">
+          <button data-copy-url data-done="Enlace copiado ✓" class="copy border border-line px-3 py-2 uppercase tracking-widest text-muted transition hover:bg-fg hover:text-ink">
+            Copiar enlace
+          </button>
+          <a href={sourceUrl(s)} target="_blank" rel="noopener" class="text-dim hover:text-fg">SKILL.md ↗</a>
+        </div>
+      </div>
+
+      <div class="tiles flex flex-wrap lg:min-h-[22rem] items-center justify-center gap-3 border border-line bg-ink p-4 sm:p-6">
+        {s.terminal ? <Terminal lines={s.terminal} /> : media.slice(0, 2).map((m) => <Tile m={m} title={s.title} />)}
+      </div>
+    </section>
+
+    {
+      s.steps && (
+        <section class="border-b border-line py-12">
+          <h2 class="font-mono text-xs uppercase tracking-widest text-dim">Cómo funciona</h2>
+          <ol class="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))]">
+            {s.steps.map(([t, d], i) => (
+              <li class="bg-panel p-5">
+                <p class="font-mono text-xs text-cyan">{String(i + 1).padStart(2, "0")}</p>
+                <p class="mt-2 font-semibold text-fg">{t}</p>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">{d}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      media.length > 0 && (
+        <section class="border-b border-line py-12">
+          <h2 class="font-mono text-xs uppercase tracking-widest text-dim">
+            Ejemplos <span class="text-muted">{media.length}</span>
+          </h2>
+          <p class="mt-2 text-sm text-muted">Recortes de entregas reales hechas con esta skill.</p>
+          <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {media.map((m) => (
+              <div class={m.ratio === "16/9" ? "col-span-2" : ""}>
+                <Tile m={m} title={s.title} grow={false} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="grid gap-10 py-12 md:grid-cols-2">
+      {
+        s.needs && (
+          <div>
+            <h2 class="font-mono text-xs uppercase tracking-widest text-dim">Qué necesitas</h2>
+            <ul class="mt-5 space-y-3">
+              {s.needs.map((n) => (
+                <li class="flex gap-3 text-muted">
+                  <span class="mt-2 inline-block size-1.5 shrink-0 bg-cyan" />
+                  <span>{n}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+      <div>
+        <h2 class="font-mono text-xs uppercase tracking-widest text-dim">Con qué trabaja</h2>
+        <p class="mt-5 flex flex-wrap gap-1.5 font-mono text-xs text-muted">
+          {s.tools.map((t) => <span class="border border-line px-2 py-1">{t}</span>)}
+        </p>
+      </div>
+    </section>
+
+    <section class="border-t border-line pt-12">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-dim">Otras skills</h2>
+      <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          others.map((o) => (
+            <li class="border border-line bg-panel">
+              <a href={`/${o.name}/`} class="group flex h-full flex-col p-5 transition-colors hover:bg-ink">
+                <span class="font-mono text-[11px] text-dim">{o.name}</span>
+                <span class="mt-1 font-semibold text-fg group-hover:text-cyan">{o.title} →</span>
+                <span class="mt-1.5 text-sm leading-relaxed text-muted">{o.line}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+
+  <footer class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-8 font-mono text-xs text-dim sm:px-8">
+    <span>Un taller de <a href="https://jaimeaza.tech" target="_blank" rel="noopener author" class="text-muted hover:text-fg">Jaime Aza ↗</a></span>
+    <a href="https://jato.run" class="hover:text-fg">jato.run</a>
+  </footer>
+
+  <script>
+    import "../scripts/copy.ts";
+    import "../scripts/lazy-video.ts";
+  </script>
+</Base>

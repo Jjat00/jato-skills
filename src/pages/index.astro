@@ -2,12 +2,13 @@
 import Base from "../layouts/Base.astro";
 import Grid from "../components/Grid.astro";
 import Install from "../components/Install.astro";
-import { CATEGORIES, REPO, skills, installAll, installOne, sourceUrl } from "../data/skills.js";
+import Tile from "../components/Tile.astro";
+import Terminal from "../components/Terminal.astro";
+import { CATEGORIES, REPO, skills, installAll, installOne } from "../data/skills.js";
 
-const showcase = skills;
-// Crecer en proporción al ancho/alto deja todas las láminas de una fila a la misma altura.
-const ratio = (r: string) => { const [w, h] = r.split("/").map(Number); return w / h; };
 const count = (id) => skills.filter((s) => s.category === id).length;
+// En la portada, la terminal reemplaza a los medios y como mucho van 3 láminas; el resto vive en la página de la skill.
+const tiles = (s) => (s.terminal ? [] : (s.media ?? []).slice(0, 3));
 ---
 
 <Base title="jato · skills" description="Skills para Claude Code y Codex: video y contenido, con ejemplos reales de lo que hacen.">
@@ -52,11 +53,13 @@ const count = (id) => skills.filter((s) => s.category === id).length;
 
       <div class="space-y-6">
         {
-          showcase.map((s) => (
+          skills.map((s) => (
             <article class="skill grid border border-line bg-panel lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]" data-category={s.category}>
               <div class="flex flex-col p-6 sm:p-8">
                 <p class="font-mono text-xs text-dim">{s.name}</p>
-                <h2 class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{s.title}</h2>
+                <h2 class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+                  <a href={`/${s.name}/`} class="hover:text-cyan">{s.title}</a>
+                </h2>
                 <p class="mt-3 leading-relaxed text-muted">{s.line}</p>
 
                 <p class="mt-6 font-mono text-[11px] uppercase tracking-widest text-dim">Pídele</p>
@@ -69,53 +72,24 @@ const count = (id) => skills.filter((s) => s.category === id).length;
                 <div class="mt-auto pt-8">
                   <div class="mb-2 flex items-baseline justify-between font-mono text-[11px] uppercase tracking-widest text-dim">
                     <span>Instalar solo esta</span>
-                    <a href={sourceUrl(s)} target="_blank" rel="noopener" class="normal-case tracking-normal hover:text-fg">SKILL.md ↗</a>
+                    <a href={`/${s.name}/`} class="normal-case tracking-normal text-muted hover:text-fg">Ver la skill →</a>
                   </div>
                   <Install cmd={installOne(s)} />
                 </div>
               </div>
 
-              <div class="tiles flex items-center justify-center gap-3 overflow-hidden border-t border-line bg-ink p-4 sm:p-6 lg:border-l lg:border-t-0">
-                {s.media &&
-                  s.media.map((m) => (
-                    <figure class="relative min-w-0" style={`aspect-ratio: ${m.ratio}; flex: ${ratio(m.ratio)} 1 0;`}>
-                      {m.image ? (
-                        <img src={`/media/${m.src}.jpg`} alt={`${s.title}: ${m.label}`} loading="lazy" class="size-full border border-line object-cover" />
-                      ) : (
-                        <video
-                          class="lazy-video size-full border border-line object-cover"
-                          data-src={`/media/${m.src}.mp4`}
-                          poster={`/media/${m.src}.jpg`}
-                          muted
-                          loop
-                          playsinline
-                          preload="none"
-                          aria-label={`${s.title}: ${m.label}`}
-                        />
-                      )}
-                      <figcaption class="absolute bottom-0 left-0 bg-ink/80 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-muted">{m.label}</figcaption>
-                    </figure>
-                  ))}
-                {s.terminal && (
-                  <div class="w-full max-w-lg border border-line bg-panel font-mono text-xs sm:text-[13px]">
-                    <div class="flex gap-1.5 border-b border-line px-3 py-2.5">
-                      <span class="size-2 bg-line" />
-                      <span class="size-2 bg-line" />
-                      <span class="size-2 bg-line" />
-                    </div>
-                    <div class="space-y-1.5 px-4 py-4">
-                      {s.terminal.map((l) => (
-                        <p class={l.startsWith("→") ? "text-cyan" : l.startsWith("$") ? "text-fg" : "text-dim"}>{l}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <a
+                href={`/${s.name}/`}
+                aria-label={`Ver ${s.title}`}
+                class="tiles flex items-center justify-center gap-3 overflow-hidden border-t border-line bg-ink p-4 sm:p-6 lg:border-l lg:border-t-0"
+              >
+                {tiles(s).map((m) => <Tile m={m} title={s.title} />)}
+                {s.terminal && <Terminal lines={s.terminal} />}
+              </a>
             </article>
           ))
         }
       </div>
-
     </section>
   </main>
 
@@ -125,12 +99,6 @@ const count = (id) => skills.filter((s) => s.category === id).length;
   </footer>
 
   <style>
-    .tiles {
-      background-image:
-        linear-gradient(to right, rgb(237 237 237 / 0.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgb(237 237 237 / 0.045) 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
     .filter { color: var(--color-muted); transition: background 0.15s, color 0.15s; }
     .filter:hover { color: var(--color-fg); }
     .filter.is-on { background: var(--color-fg); color: var(--color-ink); border-color: var(--color-fg); }
@@ -138,19 +106,8 @@ const count = (id) => skills.filter((s) => s.category === id).length;
   </style>
 
   <script>
-    // Copiar comandos de instalación.
-    for (const b of document.querySelectorAll<HTMLButtonElement>("button.copy")) {
-      const label = b.textContent?.trim() ?? "";
-      b.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(b.dataset.copy ?? "");
-          b.textContent = "Copiado ✓";
-        } catch {
-          b.textContent = "No se pudo copiar";
-        }
-        setTimeout(() => (b.textContent = label), 1600);
-      });
-    }
+    import "../scripts/copy.ts";
+    import "../scripts/lazy-video.ts";
 
     // Filtro por categoría.
     const filters = document.querySelectorAll<HTMLButtonElement>(".filter");
@@ -162,18 +119,5 @@ const count = (id) => skills.filter((s) => s.category === id).length;
         cards.forEach((c) => (c.hidden = id !== "all" && c.dataset.category !== id));
       });
     }
-
-    // Los videos solo cargan y suenan (en silencio) cuando están en pantalla.
-    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const io = new IntersectionObserver((entries) => {
-      for (const { target, isIntersecting } of entries) {
-        const v = target as HTMLVideoElement;
-        if (isIntersecting) {
-          if (!v.src) v.src = v.dataset.src ?? "";
-          if (!reduce) v.play().catch(() => {});
-        } else v.pause();
-      }
-    }, { rootMargin: "200px" });
-    document.querySelectorAll(".lazy-video").forEach((v) => io.observe(v));
   </script>
 </Base>
