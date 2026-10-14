@@ -2,6 +2,7 @@
 // Página propia de cada skill: para compartir una sola, con más detalle y todos sus ejemplos.
 import Base from "../layouts/Base.astro";
 import Install from "../components/Install.astro";
+import StarCta from "../components/StarCta.astro";
 import Tile from "../components/Tile.astro";
 import Terminal from "../components/Terminal.astro";
 import { CATEGORIES, REPO, skills, installOne, sourceUrl } from "../data/skills.js";
@@ -25,7 +26,7 @@ const others = skills.filter((o) => o.name !== s.name);
     </a>
     <nav class="flex items-center gap-5 font-mono text-xs uppercase tracking-widest text-muted">
       <a href="/" class="hover:text-fg">← Todas</a>
-      <a href={REPO} target="_blank" rel="noopener" class="hover:text-fg">GitHub ↗</a>
+      <a href={REPO} target="_blank" rel="noopener" class="text-cyan hover:text-fg">★ <span class="hidden sm:inline">Estrella en </span>GitHub</a>
     </nav>
   </header>
 
@@ -132,6 +133,7 @@ const others = skills.filter((o) => o.name !== s.name);
         }
       </ul>
     </section>
+    <StarCta />
   </main>
 
   <footer class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-8 font-mono text-xs text-dim sm:px-8">

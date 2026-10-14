@@ -1,0 +1,22 @@
+---
+// Cierre de página: las skills son open source, así que se pide una estrella al repo.
+import { REPO } from "../data/skills.js";
+---
+
+<section class="border-t border-line py-20 text-center">
+  <svg class="mx-auto size-9 text-cyan" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" />
+  </svg>
+  <h2 class="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">Si te sirven, deja una estrella</h2>
+  <p class="mx-auto mt-4 max-w-xl leading-relaxed text-muted">
+    Las skills son gratis y de código abierto. Una estrella en GitHub ayuda a que más gente las encuentre.
+  </p>
+  <a
+    href={REPO}
+    target="_blank"
+    rel="noopener"
+    class="mt-7 inline-flex items-center gap-2 bg-fg px-5 py-3 text-sm font-medium text-ink transition hover:bg-white"
+  >
+    ★ Dar una estrella en GitHub
+  </a>
+</section>
