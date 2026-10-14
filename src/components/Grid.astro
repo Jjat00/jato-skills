@@ -1,0 +1,123 @@
+<div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+  <canvas id="grid" class="block h-full w-full"></canvas>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,color-mix(in_srgb,var(--color-ink)_55%,transparent)_0%,transparent_60%,var(--color-ink)_100%)]"></div>
+  <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink"></div>
+</div>
+
+<script>
+  // Retícula de baldosas cuadradas: una barrida diagonal enciende celdas en cian y violeta,
+  // y algunas celdas se encienden solas y se apagan, como procesos que arrancan.
+  // Barato a propósito: ~30 fps, DPR acotado y pausa fuera de pantalla o con la pestaña oculta.
+  const canvas = document.getElementById("grid") as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext("2d");
+
+  if (canvas && ctx) {
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const dpr = Math.min(devicePixelRatio || 1, 1.5);
+    const CELL = 44;
+    const GAP = 6;
+    let w = 0;
+    let h = 0;
+    let cols = 0;
+    let rows = 0;
+    let sparks: { c: number; r: number; born: number; life: number; hue: number }[] = [];
+    let visible = true;
+    let raf = 0;
+    let last = 0;
+
+    const resize = () => {
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(w / CELL) + 1;
+      rows = Math.ceil(h / CELL) + 1;
+    };
+
+    const draw = (t: number) => {
+      ctx.clearRect(0, 0, w, h);
+      const ox = (w % CELL) / 2 - CELL / 2;
+      const oy = (h % CELL) / 2 - CELL / 2;
+      const s = t / 1000;
+      const diag = cols + rows;
+      const sweep = ((s * 6) % (diag + 16)) - 8;
+
+      for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < rows; r++) {
+          const x = ox + c * CELL + GAP / 2;
+          const y = oy + r * CELL + GAP / 2;
+          const size = CELL - GAP;
+          const d = Math.abs(c + r - sweep);
+          const glow = d < 4 ? (1 - d / 4) ** 2 : 0;
+          ctx.strokeStyle = `rgba(237, 237, 237, ${0.07 + glow * 0.12})`;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(x + 0.5, y + 0.5, size - 1, size - 1);
+          if (glow > 0) {
+            const hue = 190 + (c / cols) * 63;
+            ctx.fillStyle = `hsla(${hue}, 80%, 66%, ${glow * 0.14})`;
+            ctx.fillRect(x, y, size, size);
+          }
+        }
+      }
+
+      for (const p of sparks) {
+        const age = (t - p.born) / p.life;
+        if (age < 0 || age > 1) continue;
+        const a = Math.sin(age * Math.PI);
+        const x = ox + p.c * CELL + GAP / 2;
+        const y = oy + p.r * CELL + GAP / 2;
+        const size = CELL - GAP;
+        ctx.fillStyle = `hsla(${p.hue}, 80%, 66%, ${a * 0.28})`;
+        ctx.fillRect(x, y, size, size);
+        ctx.strokeStyle = `hsla(${p.hue}, 80%, 70%, ${a * 0.8})`;
+        ctx.strokeRect(x + 0.5, y + 0.5, size - 1, size - 1);
+      }
+      sparks = sparks.filter((p) => t - p.born < p.life);
+    };
+
+    const spawn = (t: number) => {
+      if (sparks.length < 22 && Math.random() < 0.2) {
+        sparks.push({
+          c: Math.floor(Math.random() * cols),
+          r: Math.floor(Math.random() * rows),
+          born: t,
+          life: 1800 + Math.random() * 2200,
+          hue: Math.random() < 0.5 ? 190 : 253,
+        });
+      }
+    };
+
+    const loop = (t: number) => {
+      raf = requestAnimationFrame(loop);
+      if (t - last < 33) return;
+      last = t;
+      spawn(t);
+      draw(t);
+    };
+
+    const start = () => {
+      if (!raf && visible && !document.hidden) raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+
+    resize();
+    draw(0);
+    addEventListener("resize", () => {
+      resize();
+      draw(last);
+    });
+
+    if (!reduce) {
+      new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        visible ? start() : stop();
+      }).observe(canvas);
+      document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+      start();
+    }
+  }
+</script>

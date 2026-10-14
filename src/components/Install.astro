@@ -1,0 +1,16 @@
+---
+// Comando para instalar una sola skill, visible y con botón de copiar.
+interface Props {
+  cmd: string;
+}
+const { cmd } = Astro.props;
+// En pantallas anchas el salto va antes de `--skill`, nunca dentro del nombre.
+const [base, rest] = cmd.split(" --skill ");
+---
+
+<div class="flex min-w-0 items-stretch border border-line bg-ink font-mono text-xs">
+  <code class="min-w-0 flex-1 px-3 py-2.5 leading-relaxed text-fg [overflow-wrap:anywhere]"><span class="select-none text-cyan">$ </span>{base}{rest && <> <span class="sm:whitespace-nowrap">--skill {rest}</span></>}</code>
+  <button data-copy={cmd} class="copy shrink-0 border-l border-line px-3 uppercase tracking-widest text-muted transition hover:bg-fg hover:text-ink">
+    Copiar
+  </button>
+</div>
