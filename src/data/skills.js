@@ -25,7 +25,7 @@ export const skills = [
     name: "explicador-rapido",
     category: "video",
     title: "Explicador rápido",
-    line: "Un tema técnico explicado en un reel de 2:30, sin presentador: voz narrada, subtítulos palabra a palabra y cifras que salen de correr modelos de verdad.",
+    line: "Un tema técnico explicado en un reel de 2:30, narrado por una voz y sin nadie frente a la cámara: subtítulos palabra a palabra y cifras que salen de correr modelos de verdad.",
     ask: "Hazme un explicador de bases de datos vectoriales",
     tools: ["HyperFrames", "ElevenLabs", "YOLO", "embeddings"],
     media: [
@@ -103,7 +103,7 @@ const DETAILS = {
   },
   "explicador-rapido": {
     about:
-      "Un tema técnico explicado en un reel vertical de unos 2:30, sin presentador. Las cifras que salen en pantalla no se inventan: se calculan corriendo modelos de verdad (detección de objetos, redes convolucionales, embeddings, benchmarks). El estilo es el de jato.run: negro, paleta pastel, todo esquinado y subtítulos palabra a palabra.",
+      "Un tema técnico explicado en un reel vertical de unos 2:30, narrado por una voz y sin nadie frente a la cámara: toda la pantalla es para los datos y los diagramas. Las cifras que salen en pantalla no se inventan: se calculan corriendo modelos de verdad (detección de objetos, redes convolucionales, embeddings, benchmarks). El estilo es el de jato.run: negro, paleta pastel, todo esquinado y subtítulos palabra a palabra.",
     steps: [
       ["Guion", "Se escribe y se aprueba antes de gastar nada. Si hay un video de referencia, se cubre punto por punto."],
       ["Datos reales", "Cada número de la pantalla sale de un modelo o un benchmark corrido en tu máquina."],
