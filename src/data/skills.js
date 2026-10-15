@@ -108,11 +108,11 @@ const DETAILS = {
     steps: [
       ["Guion", "Se escribe y se aprueba antes de gastar nada. Si hay un video de referencia, se cubre punto por punto."],
       ["Datos reales", "Cada número de la pantalla sale de un modelo o un benchmark corrido en tu máquina."],
-      ["Voz", "Prueba de 10 s, luego una sola toma que se acelera si hace falta y se corta por escena. Sugerido HF Studio; también ElevenLabs directo u otro TTS."],
+      ["Voz", "Prueba de 10 s, luego una sola toma que se acelera si hace falta y se corta por escena. Sugerido [HF Studio](https://github.com/Jjat00/hf-studio); también ElevenLabs directo u otro TTS."],
       ["Escenas", "Dos cuadros de estilo y siete escenas de ejemplo (tabla, benchmark, grafo, flujo…) sirven de molde; subagentes construyen el resto en paralelo."],
       ["Render", "Revisión completa en HyperFrames Studio y luego el MP4 listo para Reels y TikTok."],
     ],
-    needs: ["Un tema técnico y, si quieres, un video de referencia.", "HyperFrames con su flujo faceless-explainer, ffmpeg con rubberband y Python para los modelos.", "Un TTS para la voz: sugerido HF Studio; también ElevenLabs directo con tu API key u otro (OpenAI, Kokoro, edge-tts). Si es de pago, el costo se muestra antes de generar.", "Opcional: Codex CLI u otro generador para imágenes ilustrativas."],
+    needs: ["Un tema técnico y, si quieres, un video de referencia.", "HyperFrames con su flujo faceless-explainer, ffmpeg con rubberband y Python para los modelos.", "Un TTS para la voz: sugerido [HF Studio](https://github.com/Jjat00/hf-studio) (pide clave de Higgsfield y de ElevenLabs; sirve también para imágenes y video); para solo la voz, ElevenLabs directo con tu API key u otro (OpenAI, Kokoro, edge-tts). Si es de pago, el costo se muestra antes de generar.", "Opcional: Codex CLI u otro generador para imágenes ilustrativas."],
   },
   "ruta-dron-ubicacion": {
     about:
