@@ -45,11 +45,21 @@ const others = skills.filter((o) => o.name !== s.name);
           <Install cmd={installOne(s)} />
         </div>
 
-        <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs">
+        <div class="mt-5 flex flex-wrap items-center gap-3 font-mono text-xs">
+          <a
+            href={sourceUrl(s)}
+            target="_blank"
+            rel="noopener"
+            class="flex items-center gap-2 border border-cyan px-3 py-2 uppercase tracking-widest text-cyan transition hover:bg-cyan hover:text-ink"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.2-3.1-.1-.4-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.6-2.8 5.6-5.5 6 .4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" />
+            </svg>
+            Ver en GitHub ↗
+          </a>
           <button data-copy-url data-done="Enlace copiado ✓" class="copy border border-line px-3 py-2 uppercase tracking-widest text-muted transition hover:bg-fg hover:text-ink">
             Copiar enlace
           </button>
-          <a href={sourceUrl(s)} target="_blank" rel="noopener" class="text-dim hover:text-fg">SKILL.md ↗</a>
         </div>
       </div>
 
