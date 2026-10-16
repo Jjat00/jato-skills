@@ -25,14 +25,16 @@ export const skills = [
     name: "explicador-rapido",
     category: "video",
     title: "Explicador rápido",
-    line: "Un tema técnico explicado en un reel de 2:30, narrado por una voz y sin nadie frente a la cámara: subtítulos palabra a palabra y cifras que salen de correr modelos de verdad.",
+    line: "Un tema técnico explicado en un reel de menos de 3 minutos, narrado por una voz y sin nadie frente a la cámara: subtítulos palabra a palabra, cifras que salen de modelos y cálculos de verdad, y gráficos animados o 3D cuando hacen falta.",
     ask: "Hazme un explicador de bases de datos vectoriales",
-    tools: ["HyperFrames", "ElevenLabs", "YOLO", "embeddings", "Codex"],
+    tools: ["HyperFrames", "ElevenLabs", "ManimGX", "Blender", "YOLO", "embeddings", "CoolProp", "Codex"],
     media: [
       { src: "explicador-deteccion", ratio: "9/16", label: "Detección" },
       { src: "explicador-filtro", ratio: "9/16", label: "Filtro de bordes" },
       { src: "explicador-vectores", ratio: "9/16", label: "Bases vectoriales" },
       { src: "explicador-imagenes", ratio: "9/16", label: "Con imágenes de IA" },
+      { src: "explicador-fisica", ratio: "9/16", label: "Física con ManimGX" },
+      { src: "explicador-3d", ratio: "9/16", label: "3D con Blender" },
     ],
   },
   {
@@ -104,15 +106,15 @@ const DETAILS = {
   },
   "explicador-rapido": {
     about:
-      "Un tema técnico explicado en un reel vertical de unos 2:30, narrado por una voz y sin nadie frente a la cámara: toda la pantalla es para los datos y los diagramas. Las cifras que salen en pantalla no se inventan: se calculan corriendo modelos de verdad (detección de objetos, redes convolucionales, embeddings, benchmarks). El estilo es el de jato.run: negro, paleta pastel, todo esquinado y subtítulos palabra a palabra. Si tienes Codex o un generador de imágenes, la skill lo usa para lo ilustrativo (productos de ejemplo, portadas), y trae un episodio completo de referencia: guion, storyboard, escenas y scripts de datos.",
+      "Un tema técnico explicado en un reel vertical de menos de 3 minutos, narrado por una voz y sin nadie frente a la cámara: toda la pantalla es para los datos y los diagramas. Las cifras que salen en pantalla no se inventan: se calculan corriendo modelos de verdad (detección de objetos, redes convolucionales, embeddings, benchmarks) o, en temas de ingeniería, con física real contrastada con papers y artículos (por ejemplo, gas real con CoolProp para el auto volador de Tesla). El estilo es el de jato.run: negro, paleta pastel, todo esquinado y subtítulos palabra a palabra. Si tienes Codex o un generador de imágenes, la skill lo usa para lo ilustrativo (productos de ejemplo, portadas), y trae un episodio completo de referencia: guion, storyboard, escenas y scripts de datos. Para lo que HTML hace mal, suma diagramas y fórmulas animadas con ManimGX y tomas 3D con Blender, sincronizados con la voz. Queda por debajo de 3 minutos, porque Instagram no muestra a público nuevo los reels más largos.",
     steps: [
-      ["Guion", "Se escribe y se aprueba antes de gastar nada. Si hay un video de referencia, se cubre punto por punto."],
-      ["Datos reales", "Cada número de la pantalla sale de un modelo o un benchmark corrido en tu máquina."],
+      ["Guion", "Se escribe y se aprueba antes de gastar nada, ya medido para durar menos de 3 minutos. Si hay un video de referencia, se cubre punto por punto."],
+      ["Datos reales", "Cada número de la pantalla sale de un modelo, un benchmark o un cálculo físico corrido en tu máquina; lo estimado se marca como tal."],
       ["Voz", "Prueba de 10 s, luego una sola toma que se acelera si hace falta y se corta por escena. Sugerido [HF Studio](https://github.com/Jjat00/hf-studio); también ElevenLabs directo u otro TTS."],
-      ["Escenas", "Dos cuadros de estilo y siete escenas de ejemplo (tabla, benchmark, grafo, flujo…) sirven de molde; subagentes construyen el resto en paralelo."],
+      ["Escenas", "Dos cuadros de estilo y siete escenas de ejemplo (tabla, benchmark, grafo, flujo…) sirven de molde; subagentes construyen el resto en paralelo. Si hace falta, gráficos en ManimGX y objetos 3D en Blender, cada uno en la palabra que lo nombra."],
       ["Render", "Revisión completa en HyperFrames Studio y luego el MP4 listo para Reels y TikTok."],
     ],
-    needs: ["Un tema técnico y, si quieres, un video de referencia.", "HyperFrames con su flujo faceless-explainer, ffmpeg con rubberband y Python para los modelos.", "Un TTS para la voz: sugerido [HF Studio](https://github.com/Jjat00/hf-studio) (pide clave de Higgsfield y de ElevenLabs; sirve también para imágenes y video); para solo la voz, ElevenLabs directo con tu API key u otro (OpenAI, Kokoro, edge-tts). Si es de pago, el costo se muestra antes de generar.", "Opcional: Codex CLI u otro generador para imágenes ilustrativas."],
+    needs: ["Un tema técnico y, si quieres, un video de referencia.", "HyperFrames con su flujo faceless-explainer, ffmpeg con rubberband y Python para los modelos.", "Un TTS para la voz: sugerido [HF Studio](https://github.com/Jjat00/hf-studio) (pide clave de Higgsfield y de ElevenLabs; sirve también para imágenes y video); para solo la voz, ElevenLabs directo con tu API key u otro (OpenAI, Kokoro, edge-tts). Si es de pago, el costo se muestra antes de generar.", "Opcional: Codex CLI u otro generador para imágenes ilustrativas.", "Opcional: [ManimGX](https://manimgx.academa.ai/) para gráficos y fórmulas animadas, y Blender para tomas 3D."],
   },
   "ruta-dron-ubicacion": {
     about:
