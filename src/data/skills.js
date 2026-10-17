@@ -72,7 +72,7 @@ export const skills = [
     title: "Noticias de IA del día",
     line: "Investiga las noticias de IA del día, captura su video o imagen y entrega el carrusel para Instagram y TikTok, el reel narrado y el caption.",
     ask: "Hazme el carrusel de noticias de IA de hoy",
-    tools: ["Playwright", "ffmpeg", "edge-tts"],
+    tools: ["Playwright", "ffmpeg", "edge-tts", "ElevenLabs"],
     media: [
       { src: "noticias-reel", ratio: "9/16", label: "Reel" },
       { src: "noticias-lamina", ratio: "4/5", label: "Lámina en video" },
