@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://skills.jato.run",
+  site: "https://skills.jjato.com",
   devToolbar: { enabled: false },
   output: "static",
   

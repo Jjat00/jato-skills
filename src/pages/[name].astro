@@ -19,10 +19,10 @@ const poster = media.find((m) => !m.image) ?? media[0];
 const others = skills.filter((o) => o.name !== s.name);
 ---
 
-<Base title={`${s.title} · jato skills`} description={s.line} path={`/${s.name}/`} image={poster && `/media/${poster.src}.jpg`}>
+<Base title={`${s.title} · jjato skills`} description={s.line} path={`/${s.name}/`} image={poster && `/media/${poster.src}.jpg`}>
   <header class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6 sm:px-8">
     <a href="/" class="group flex items-baseline gap-0.5" aria-label="Todas las skills">
-      <span class="text-2xl font-semibold tracking-tight">jato</span>
+      <span class="text-2xl font-semibold tracking-tight">jjato</span>
       <span class="font-mono text-sm text-dim transition-colors group-hover:text-muted">/skills</span>
     </a>
     <nav class="flex items-center gap-5 font-mono text-xs uppercase tracking-widest text-muted">
@@ -149,7 +149,7 @@ const others = skills.filter((o) => o.name !== s.name);
 
   <footer class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-8 font-mono text-xs text-dim sm:px-8">
     <span>Un taller de <a href="https://jaimeaza.tech" target="_blank" rel="noopener author" class="text-muted hover:text-fg">Jaime Aza ↗</a></span>
-    <span class="flex gap-5"><a href="/llms.txt" class="hover:text-fg" title="Catálogo para Claude, ChatGPT, Codex y otros modelos">llms.txt</a><a href="https://jato.run" class="hover:text-fg">jato.run</a></span>
+    <span class="flex gap-5"><a href="/llms.txt" class="hover:text-fg" title="Catálogo para Claude, ChatGPT, Codex y otros modelos">llms.txt</a><a href="https://jjato.com" class="hover:text-fg">jjato.com</a></span>
   </footer>
 
   <script>

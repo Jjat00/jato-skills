@@ -1,6 +1,6 @@
-# jato skills
+# jjato skills
 
-Landing de [skills.jato.run](https://skills.jato.run): el catálogo de las skills de video y contenido de
+Landing de [skills.jjato.com](https://skills.jjato.com): el catálogo de las skills de video y contenido de
 [Jjat00/jjat-skills](https://github.com/Jjat00/jjat-skills), con ejemplos reales de lo que hace cada una, la
 petición que la dispara y el comando para instalarla. Las skills viven en ese repo; aquí solo está la página.
 

@@ -164,7 +164,7 @@ const DETAILS = {
 };
 for (const s of skills) Object.assign(s, DETAILS[s.name]);
 
-export const SITE = "https://skills.jato.run";
+export const SITE = "https://skills.jjato.com";
 export const pageUrl = (s) => `${SITE}/${s.name}/`;
 
 export const installAll = "npx skills add Jjat00/jjat-skills -g";
