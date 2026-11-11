@@ -1,4 +1,4 @@
-# jjato skills
+# Jjato skills
 
 Landing de [skills.jjato.com](https://skills.jjato.com): el catálogo de las skills de video y contenido de
 [Jjat00/jjat-skills](https://github.com/Jjat00/jjat-skills), con ejemplos reales de lo que hace cada una, la

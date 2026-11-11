@@ -41,7 +41,7 @@ export function skillMarkdown(s, level = 1) {
 
 const header = () =>
   [
-    "# jjato skills",
+    "# Jjato skills",
     "",
     `> ${TAGLINE} Cada skill es una carpeta con un SKILL.md que Claude Code, Codex y otros agentes compatibles cargan solos cuando el pedido encaja.`,
     "",
