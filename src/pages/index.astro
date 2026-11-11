@@ -1,4 +1,5 @@
 ---
+import Logo from "../components/Logo.astro";
 import Base from "../layouts/Base.astro";
 import Grid from "../components/Grid.astro";
 import Install from "../components/Install.astro";
@@ -15,7 +16,7 @@ const tiles = (s) => (s.terminal ? [] : (s.media ?? []).slice(0, 3));
 <Base title="Jjato · skills" description="Skills para Claude Code y Codex: video y contenido, con ejemplos reales de lo que hacen.">
   <header class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6 sm:px-8">
     <a href="https://jjato.com" class="group flex items-baseline gap-0.5" aria-label="Jjato">
-      <span class="text-2xl font-semibold tracking-tight">Jjato</span>
+      <Logo class="h-7 w-auto self-center" />
       <span class="font-mono text-sm text-dim transition-colors group-hover:text-muted">/skills</span>
     </a>
     <nav class="flex items-center gap-5 font-mono text-xs uppercase tracking-widest text-muted">

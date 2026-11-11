@@ -1,4 +1,5 @@
 ---
+import Logo from "../components/Logo.astro";
 // Página propia de cada skill: para compartir una sola, con más detalle y todos sus ejemplos.
 import Base from "../layouts/Base.astro";
 import Install from "../components/Install.astro";
@@ -22,7 +23,7 @@ const others = skills.filter((o) => o.name !== s.name);
 <Base title={`${s.title} · Jjato skills`} description={s.line} path={`/${s.name}/`} image={poster && `/media/${poster.src}.jpg`}>
   <header class="mx-auto flex max-w-6xl items-center justify-between px-4 py-6 sm:px-8">
     <a href="/" class="group flex items-baseline gap-0.5" aria-label="Todas las skills">
-      <span class="text-2xl font-semibold tracking-tight">Jjato</span>
+      <Logo class="h-7 w-auto self-center" />
       <span class="font-mono text-sm text-dim transition-colors group-hover:text-muted">/skills</span>
     </a>
     <nav class="flex items-center gap-5 font-mono text-xs uppercase tracking-widest text-muted">
